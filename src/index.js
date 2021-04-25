@@ -1,14 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { Suspense } from "react";
+import ReactDOM from "react-dom";
+import reportWebVitals from "./reportWebVitals";
+
+// Global css
+import "./index.css";
+
+// Components
+import App from "App";
+import Loading from "components/global/Loading";
+
+// Snackbar
+import { SnackbarProvider } from "notistack";
+import { SnackbarUtilsConfigurator } from "shared/snackbar/utils";
+
+// Material UI
+import { MuiThemeProvider } from "@material-ui/core/styles";
+
+// Theme
+import theme from "./theme";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <Suspense fallback={<Loading />}>
+    <MuiThemeProvider theme={theme}>
+      <SnackbarProvider>
+        <SnackbarUtilsConfigurator />
+        <App />
+      </SnackbarProvider>
+    </MuiThemeProvider>
+  </Suspense>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
